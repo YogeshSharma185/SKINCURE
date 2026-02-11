@@ -1,0 +1,284 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SkinCure | Skin Types & Diseases</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: "Segoe UI", sans-serif;
+            background: #fff;
+        }
+
+        main {
+            flex: 1;
+            padding-top: 120px;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+        }
+
+        .brand {
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #ff3f6c;
+        }
+
+        .nav-link {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            color: #282c3f !important;
+            text-transform: uppercase;
+            padding: 6px 10px;
+        }
+
+        .nav-link:hover {
+            color: #ff3f6c !important;
+        }
+
+        .icon-btn {
+            color: #282c3f;
+            font-size: 18px;
+            margin-left: 18px;
+        }
+
+        .icon-btn:hover {
+            color: #ff3f6c;
+        }
+
+        /* ===== PAGE TITLE ===== */
+        .page-title {
+            font-weight: 800;
+            color: #282c3f;
+        }
+
+        .page-title span {
+            color: #ff3f6c;
+        }
+
+        /* ===== DISEASE CARDS ===== */
+        .disease-card {
+            border: 1px solid #eee;
+            border-radius: 16px;
+            padding: 22px;
+            text-align: center;
+            background: #fff;
+            transition: 0.3s;
+            height: 100%;
+        }
+
+        .disease-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+        }
+
+        .disease-card img {
+            width: 280px;
+            margin-bottom: 14px;
+        }
+
+        .disease-card h5 {
+            font-weight: 700;
+            color: #282c3f;
+        }
+
+        .disease-card p {
+            font-size: 24px;
+            color: #555;
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid #eee;
+            font-size: 13px;
+            padding: 14px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar fixed-top py-3">
+    <div class="container d-flex align-items-center justify-content-between">
+
+        <a href="{% url 'home' %}" class="text-decoration-none">
+            <h4 class="brand mb-0">SKINCURE</h4>
+        </a>
+
+        <div class="d-none d-md-flex gap-4">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+            <a class="nav-link" href="{% url 'disease' %}">Skin Types</a>
+            <a class="nav-link" href="{% url 'prediction' %}">Skin Check</a>
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+        </div>
+
+        <div class="d-flex align-items-center">
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="icon-btn">
+                    <i class="fa-regular fa-user"></i>
+                </a>
+                <a href="{% url 'custom_logout' %}" class="icon-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="icon-btn">
+                    <i class="fa-regular fa-user"></i>
+                </a>
+            {% endif %}
+        </div>
+
+    </div>
+</nav>
+
+<!-- ===== MAIN ===== -->
+<main>
+    <div class="container">
+
+        <h2 class="page-title text-center mb-5">
+            Skin Types & <span>Diseases</span>
+        </h2>
+
+        <div class="row g-4 justify-content-center">
+
+            <div class="col-md-4">
+                <div class="disease-card">
+                    <img src="{% static 'Images/dry.png' %}">
+                    <h5>Actinic Keratosis</h5>
+                    <p>
+                        A precancerous skin condition that appears as rough, dry, or scaly patches.
+                        It is mainly caused by long-term exposure to ultraviolet (UV) sunlight and
+                        commonly develops on sun-exposed areas like face, ears, and hands.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="disease-card">
+                    <img src="{% static 'Images/acne.png' %}">
+                    <h5>Atopic Dermatitis</h5>
+                    <p>
+                        A chronic inflammatory skin disease that causes redness, itching, dryness,
+                        and irritation. It often begins in childhood and may flare up due to allergens,
+                        stress, or environmental factors.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="disease-card">
+                    <img src="{% static 'Images/Normal.png' %}">
+                    <h5>Benign Keratosis</h5>
+                    <p>
+                        A non-cancerous skin growth that usually appears as a brown or black rough
+                        patch. It has a waxy or wart-like appearance and generally does not require
+                        medical treatment.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="disease-card">
+                    <img src="{% static 'Images/oily.png' %}">
+                    <h5>Dermatofibroma</h5>
+                    <p>
+                        A harmless, firm skin nodule commonly found on the arms or legs.
+                        It may develop after minor skin injuries like insect bites and usually
+                        feels hard when touched.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="disease-card">
+                    <img src="{% static 'Images/Normal.png' %}">
+                    <h5>Melanocytic Nevus</h5>
+                    <p>
+                        Commonly known as a mole, this is a benign growth formed by melanocytes.
+                        These can be flat or raised and vary in color, usually harmless unless
+                        changes in size, shape, or color occur.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="disease-card">
+                    <img src="{% static 'Images/Sensitive.png' %}">
+                    <h5>Melanoma</h5>
+                    <p>
+                        A serious and aggressive form of skin cancer that develops from pigment-
+                        producing cells. It often appears as an irregular mole and can spread
+                        quickly if not detected early.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="disease-card">
+                    <img src="{% static 'Images/acne.png' %}">
+                    <h5>Squamous Cell Carcinoma</h5>
+                    <p>
+                        A common type of skin cancer that appears as scaly red patches, open sores,
+                        or raised growths. It is mainly caused by prolonged sun exposure and may
+                        bleed or crust over time.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="disease-card">
+                    <img src="{% static 'Images/Sensitive.png' %}">
+                    <h5>Tinea Ringworm</h5>
+                    <p>
+                        A contagious fungal infection characterized by circular, ring-shaped rashes.
+                        It causes itching, redness, and scaling and spreads through skin contact
+                        or shared personal items.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="disease-card">
+                    <img src="{% static 'Images/acne.png' %}">
+                    <h5>Vascular Lesion</h5>
+                    <p>
+                        A skin abnormality caused by irregular blood vessels, appearing as red,
+                        purple, or blue marks on the skin. These lesions are usually harmless but
+                        can vary in size and shape.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="text-center text-muted">
+    © {{ now.year }} SkinCure • AI Skin Care Platform
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

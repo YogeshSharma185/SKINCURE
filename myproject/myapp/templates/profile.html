@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SkinCure | My Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    html, body {
+        height: 100%;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        font-family: "Segoe UI", sans-serif;
+        background: #fff;
+    }
+
+    main {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 120px;
+        padding-bottom: 50px;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+        background: #fff;
+        border-bottom: 1px solid #eee;
+    }
+
+    .brand {
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: #ff3f6c;
+    }
+
+    .nav-link {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        color: #282c3f !important;
+        text-transform: uppercase;
+        padding: 6px 10px;
+    }
+
+    .nav-link:hover {
+        color: #ff3f6c !important;
+    }
+
+    .icon-btn {
+        color: #282c3f;
+        font-size: 18px;
+        margin-left: 18px;
+    }
+
+    .icon-btn:hover {
+        color: #ff3f6c;
+    }
+
+    /* ===== PROFILE CARD ===== */
+    .profile-card {
+        max-width: 450px;
+        background: #fff;
+        border-radius: 18px;
+        padding: 30px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        transition: 0.3s;
+        text-align: center;
+    }
+
+    .profile-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
+
+    .profile-card h2 {
+        font-weight: 800;
+        color: #282c3f;
+        margin-bottom: 25px;
+    }
+
+    .info-label {
+        color: #555;
+        font-weight: 600;
+    }
+
+    .logout-btn {
+        width: 100%;
+        border-radius: 10px;
+        padding: 12px;
+        background: #ff3f6c;
+        border: none;
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        transition: 0.3s;
+        margin-top: 15px;
+    }
+
+    .logout-btn:hover {
+        background: #e7335d;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+        border-top: 1px solid #eee;
+        font-size: 13px;
+        padding: 14px 0;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar fixed-top py-3">
+    <div class="container d-flex align-items-center justify-content-between">
+
+        <a href="{% url 'home' %}" class="text-decoration-none">
+            <h4 class="brand mb-0">SKINCURE</h4>
+        </a>
+
+        <div class="d-none d-md-flex gap-4">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+            <a class="nav-link" href="{% url 'disease' %}">Skin Types</a>
+            <a class="nav-link" href="{% url 'prediction' %}">Skin Check</a>
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+        </div>
+
+        <div class="d-flex align-items-center">
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="icon-btn" title="Profile">
+                    <i class="fa-regular fa-user"></i>
+                </a>
+                <a href="{% url 'custom_logout' %}" class="icon-btn" title="Logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="icon-btn" title="Login">
+                    <i class="fa-regular fa-user"></i>
+                </a>
+            {% endif %}
+        </div>
+
+    </div>
+</nav>
+
+<!-- ===== MAIN ===== -->
+<main>
+    <div class="profile-card">
+        <h2>My Profile</h2>
+
+        <p><span class="info-label">Username:</span> {{ user.username }}</p>
+        <p><span class="info-label">Email:</span> {{ user.email }}</p>
+
+        <form method="post" action="{% url 'custom_logout' %}">
+            {% csrf_token %}
+            <button class="logout-btn" type="submit">Logout</button>
+        </form>
+    </div>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="text-center text-muted">
+    © {{ now.year }} SkinCure • AI Skin Care Platform
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

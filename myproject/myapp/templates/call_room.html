@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Secure Video Call</title>
+    <script src="https://meet.jit.si/external_api.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        #meet { width: 100vw; height: 100vh; }
+    </style>
+</head>
+<body>
+
+<div id="meet"></div>
+
+<script>
+    const domain = "meet.jit.si";
+
+    // -----------------------------
+    // CHECK IF DOCTOR JOINED AS HOST
+    // -----------------------------
+    const urlParams = new URLSearchParams(window.location.search);
+    const isHost = urlParams.get("host") === "1";
+
+    const roomName = "{{ meeting_id }}";
+
+    const options = {
+        roomName: roomName,
+        parentNode: document.querySelector("#meet"),
+        userInfo: {
+            displayName: "{{ request.user.username }}"
+        },
+        configOverwrite: {
+            enableLobby: true,          // Patient will wait
+            prejoinPageEnabled: true,
+        }
+    };
+
+    const api = new JitsiMeetExternalAPI(domain, options);
+
+    // -----------------------------
+    // ONLY HOST SETS PASSWORD
+    // -----------------------------
+    api.addEventListener("videoConferenceJoined", () => {
+        if (isHost) {
+            console.log("HOST joined → setting moderator rights");
+
+            // Make sure doctor becomes moderator
+            api.executeCommand("password", "{{ meeting_password|default:'' }}");
+        }
+    });
+</script>
+
+</body>
+</html>

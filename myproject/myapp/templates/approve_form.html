@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Approve Appointment</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            padding: 40px;
+        }
+        .box {
+            max-width: 450px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 5px;
+            border: 1px solid #bbb;
+        }
+        button {
+            background: #2e89ff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #1062d9;
+        }
+        .label {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .readonly-link {
+            margin-top: 10px;
+            padding: 10px;
+            background: #eef5ff;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="box">
+    <h2>Approve Appointment</h2>
+
+    <p><b>Patient:</b> {{ appt.patient.username }}</p>
+    <p><b>Doctor:</b> {{ appt.doctor.name }}</p>
+    <p><b>Date:</b> {{ appt.date }}</p>
+    <p><b>Time:</b> {{ appt.time }}</p>
+    <hr>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label class="label">Meeting ID</label>
+        <input type="text" name="meeting_id" required>
+
+        <label class="label">Meeting Password</label>
+        <input type="text" name="meeting_password" required>
+
+        {% if appt.meeting_link %}
+            <div class="label">Existing Meeting Link</div>
+            <div class="readonly-link">{{ appt.meeting_link }}</div>
+        {% endif %}
+
+        <button type="submit">Approve & Send Email</button>
+    </form>
+</div>
+
+</body>
+</html>

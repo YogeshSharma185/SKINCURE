@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SkinCure | AI Skin Care</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        /* ===== PAGE FIX (FOOTER ALWAYS BOTTOM) ===== */
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: "Segoe UI", sans-serif;
+            background: #fff;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+        }
+
+        .brand {
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #ff3f6c;
+        }
+
+        .nav-link {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            color: #282c3f !important;
+            text-transform: uppercase;
+            padding: 6px 10px;
+        }
+
+        .nav-link:hover {
+            color: #ff3f6c !important;
+        }
+
+        .icon-btn {
+            color: #282c3f;
+            font-size: 18px;
+            margin-left: 18px;
+        }
+
+        .icon-btn:hover {
+            color: #ff3f6c;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 120px 0 80px;
+        }
+
+        .hero h1 {
+            font-weight: 800;
+            color: #282c3f;
+        }
+
+        .hero span {
+            color: #ff3f6c;
+        }
+
+        .hero-btn {
+            background: #ff3f6c;
+            border: none;
+            padding: 12px 30px;
+            font-weight: 700;
+        }
+
+        /* ===== IMAGE STYLING ===== */
+        .hero img {
+            width: 400px;      /* <-- Adjust width here */
+            height: auto;      /* maintains aspect ratio */
+            max-width: 100%;   /* responsive */
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid #eee;
+            font-size: 13px;
+            padding: 14px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar fixed-top py-3">
+    <div class="container d-flex align-items-center justify-content-between">
+
+        <!-- LOGO -->
+        <a href="{% url 'home' %}" class="text-decoration-none">
+            <h4 class="brand mb-0">SKINCURE</h4>
+        </a>
+
+        <!-- CENTER MENU -->
+        <div class="d-none d-md-flex gap-4">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+            <a class="nav-link" href="{% url 'disease' %}">Skin Types</a>
+            <a class="nav-link" href="{% url 'prediction' %}">Skin Check</a>
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+        </div>
+
+        <!-- RIGHT ICONS -->
+        <div class="d-flex align-items-center">
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="icon-btn" title="Profile">
+                    <i class="fa-regular fa-user"></i>
+                </a>
+                <a href="{% url 'custom_logout' %}" class="icon-btn" title="Logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="icon-btn" title="Login">
+                    <i class="fa-regular fa-user"></i>
+                </a>
+            {% endif %}
+        </div>
+
+    </div>
+</nav>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main>
+    <section class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="col-md-6">
+                    <h1>AI-Powered <span>Skin Disease</span><br>Detection</h1>
+                    <p class="text-muted mt-3">
+                        Upload your skin image and get instant AI-based predictions
+                        with medical insights.
+                    </p>
+                    <a href="{% url 'prediction' %}" class="btn hero-btn mt-3">
+                        Start Skin Check
+                    </a>
+                </div>
+
+                <div class="col-md-6 text-center">
+                    <img src="{% static 'Images/nurse.png' %}" alt="Nurse Image" class="img-fluid">
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="text-center text-muted">
+    © {{ now.year }} SkinCure • AI Skin Care Platform
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
